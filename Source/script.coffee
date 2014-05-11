@@ -7,6 +7,8 @@ class Item
 	constructor: (item)->
 		@title = item.title
 		@url   = item.url
+		@stock_count   = item.stock_count
+		@comment_count   = item.comment_count
 		@tags = []
 		for tag in item.tags
 			@tags.push name: tag.name, url: "http://qiita.com/tags/#{tag.name}"
@@ -102,6 +104,7 @@ template = """
 <style type="text/css">
 <!--%css%-->
 </style>
+<link href="https://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet" />
 </head>
 <body>
 <div class="bar">
@@ -164,6 +167,24 @@ main = ->
 						tagElement.setAttribute('class', 'tag')
 						tagElement.setAttribute('target', '_blank')
 						itemElement.appendChild(tagElement)
+
+					console.log(item)
+
+					stockIconElement = document.createElement('span')
+					stockIconElement.setAttribute('class', 'fa fa-folder-o')
+					itemElement.appendChild(stockIconElement)
+					stocksElement = document.createElement('span')
+					stocksElement.setAttribute('class', 'stocks')
+					setInnerText stocksElement, item.stock_count
+					itemElement.appendChild(stocksElement)
+
+					commentIconElement = document.createElement('span')
+					commentIconElement.setAttribute('class', 'fa fa-comment-o')
+					itemElement.appendChild(commentIconElement)
+					commentsElement = document.createElement('span')
+					commentsElement.setAttribute('class', 'comments')
+					setInnerText commentsElement, item.comment_count
+					itemElement.appendChild(commentsElement)
 
 					itemsBlock.appendChild(itemElement)
 
